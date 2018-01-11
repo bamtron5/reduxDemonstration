@@ -1,4 +1,4 @@
 node_modules
 dist
-server/*.js
-server/*.map
+server/**/*.js
+server/**/*.map
