@@ -6,7 +6,6 @@ import {
   TOGGLE_MODAL,
 } from './constants';
 
-// The initial state of the App
 const initialState = fromJS({
   showModal: false
 });

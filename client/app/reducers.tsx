@@ -12,7 +12,7 @@ function routeReducer(state = routeInitialState, action: Redux.AnyAction) {
   switch (action.type) {
     case LOCATION_CHANGE:
       return state.merge({
-        location: action.payload,
+        location: action.payload
       });
     default:
       return state;

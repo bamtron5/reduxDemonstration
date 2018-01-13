@@ -16,6 +16,12 @@ import { makeSelectHomePage, IState } from './selectors';
 // COMPONENTS
 import Button from './../../components/Button';
 import Modal from './../../components/Modal';
+import Container from './../../components/Container';
+import Form from './../../components/Form';
+import Input from './../../components/Input';
+
+// For user event bound functions
+let self = null;
 
 declare interface IHomeDispatch {
   onToggleModal: (show: boolean) => Redux.Dispatch<() => void>
@@ -29,14 +35,48 @@ declare interface IHomeProps extends IHomeDispatch {
 
 export class HomePage extends React.Component<IHomeProps> {
   public show: boolean = false;
+  public formName: string = 'thisForm';
+  public formData = {
+    name: { name: 'name', label: 'Name', type: 'text', value: null, required: true },
+    email: { name: 'email', label: 'Email', type: 'email', value: null, required: true },
+    phone: { name: 'phone', label: 'Phone', type: 'phone', value: null, required: true },
+    address: { name: 'address', label: 'Address', type: 'text', value: null, required: true },
+    city: { name: 'city', label: 'City', type: 'text', value: null, required: true },
+    state: { name: 'state', label: 'State', type: 'select', value: null, required: true },
+    zipcode: { name: 'zipcode', label: 'Zipcode', type: 'text', value: null, required: true }
+  };
+  public formJson: JSON | object = Object.create({});
 
   constructor(props: IHomeProps) {
     super(props);
+    this.submitForm = this.submitForm.bind(this);
+    this.watchField = this.watchField.bind(this);
+    self = this;
   }
 
   public toggleModal = () => {
     this.props.onToggleModal(!this.props.homePage.showModal);
   };
+
+  submitForm(evt: Event) {
+    evt.preventDefault();
+    const form = document.forms.namedItem(self.formName);
+    self.formData = new FormData(form);
+    self.formToJson(self.formData);
+  }
+
+  formToJson(data: FormData) {
+    data['forEach']((value, key) => {
+      Object.defineProperty(this.formJson, key, { value });
+    });
+
+    console.log(this.formJson);
+  }
+
+  watchField(evt: Event) {
+    evt.preventDefault();
+    console.log(evt);
+  }
 
   render() {
     return (
@@ -45,13 +85,27 @@ export class HomePage extends React.Component<IHomeProps> {
           <title>Home Page</title>
           <meta name="description" content="A React.js Boilerplate application homepage" />
         </Helmet>
-        <div>
-          Home Page
+        <Container>
+          <h1>Home Page</h1>
           <Button onClick={this.toggleModal}>Sign Up</Button>
-        </div>
-        <Modal show={this.props.homePage.showModal}>
-          Hello World
-        </Modal>
+
+          <Modal show={this.props.homePage.showModal} onClose={this.toggleModal}>
+
+            <Form name={this.formName} onFormSubmit={this.submitForm}>
+
+              <Input {...this.formData.name} onChange={this.watchField}/>
+              <Input {...this.formData.email} />
+              <Input {...this.formData.phone} />
+              <Input {...this.formData.address} />
+              <Input {...this.formData.city} />
+              <Input {...this.formData.zipcode} />
+
+              <Button type="submit">Submit</Button>
+
+            </Form>
+          </Modal>
+
+        </Container>
       </article>
     );
   }

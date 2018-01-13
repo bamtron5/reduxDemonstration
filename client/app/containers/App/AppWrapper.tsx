@@ -7,13 +7,12 @@ const AppWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   min-height: 100%;
-  padding: 0 16px;
   flex-direction: column;
   font-size: ${v.fontSize.base};
   font-family: ${v.fonts.primary};
   color: ${v.color.base};
 
-  * {
+  *, *:after, *:before {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

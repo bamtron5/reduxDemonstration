@@ -5,14 +5,18 @@ import * as PropTypes from 'prop-types';
 import Wrapper from './Wrapper';
 
 interface ButtonProps {
-  onClick: () => void,
-  children: React.ReactChild
+  onClick?: () => void | string;
+  children: React.ReactChild;
+  type?: string;
 }
 
 const Button:React.StatelessComponent<ButtonProps> = (props: any) => {
 
   const button = (
-    <button onClick={props.onClick}>
+    <button
+      onClick={props.onClick ? props.onClick : () => null}
+      type={props.type ? props.type : 'button'}
+    >
       {Children.toArray(props.children)}
     </button>
   );
@@ -23,10 +27,5 @@ const Button:React.StatelessComponent<ButtonProps> = (props: any) => {
     </Wrapper>
   );
 }
-
-Button.propTypes = {
-  onClick: PropTypes.func,
-  children: PropTypes.node.isRequired,
-};
 
 export default Button;

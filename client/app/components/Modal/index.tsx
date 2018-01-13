@@ -2,11 +2,14 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as PropTypes from 'prop-types';
+import * as ReactDOM from 'react-dom';
 import { Children, ComponentState } from 'react';
 
 // components
 import Backdrop from './Backdrop';
 import ModalContent from './ModalContent';
+import Container from './../Container';
+import Button from './../Button';
 
 export interface IModalState extends React.ComponentState {
   isOpen: boolean;
@@ -15,18 +18,17 @@ export interface IModalState extends React.ComponentState {
 export interface IModalProps {
   children: PropTypes.Validator<any>;
   show: boolean;
+  id: string;
 }
 
 export interface IModal {
-  show?: boolean;
-  propTypes?: IModalProps;
+  show: boolean;
+  onClose: () => void;
 }
 
 export class Modal extends React.Component<IModal, IModalState> {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    onToggleModal: PropTypes.func
-  };
+  public el: HTMLDivElement;
+  public modalRoot: HTMLElement;
 
   state: IModalState;
   static show: boolean;
@@ -35,15 +37,43 @@ export class Modal extends React.Component<IModal, IModalState> {
     props: IModal
   ) {
     super(props);
+    this.el = document.createElement('div');
+  }
+
+  componentDidMount() {
+    this.modalRoot = document.getElementById('modalRoot');
+    this.toggleModal();
+  }
+
+  componentDidUpdate() {
+    this.toggleModal();
+  }
+
+  toggleModal() {
+    if (this.props.show && !this.modalRoot.contains(this.el)) {
+      this.modalRoot.appendChild(this.el);
+    }
+
+    if (!this.props.show && this.modalRoot.contains(this.el)) {
+      this.modalRoot.removeChild(this.el);
+    }
   }
 
   render() {
-    return (
+    const modal = (
       <Backdrop show={this.props.show}>
+        <Button onClick={this.props.onClose}>Close</Button>
         <ModalContent>
-          {Children.toArray(this.props.children)}
+          <Container>
+            {Children.toArray(this.props.children)}
+          </Container>
         </ModalContent>
       </Backdrop>
+    );
+
+    return ReactDOM.createPortal(
+      modal,
+      this.el
     );
   }
 }

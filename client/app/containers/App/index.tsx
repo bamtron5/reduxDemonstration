@@ -4,6 +4,10 @@ import { Switch, Route } from 'react-router-dom';
 
 import AppWrapper from './AppWrapper';
 import HomePage from './../Home';
+import ModalRoot from './ModalRoot';
+
+// CSS
+const normalize = require('normalize.css');
 
 export function App() {
   return (
@@ -17,6 +21,7 @@ export function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
       </Switch>
+      <ModalRoot id="modalRoot"/>
     </AppWrapper>
   );
 }
