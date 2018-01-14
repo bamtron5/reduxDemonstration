@@ -1,0 +1,1 @@
+export const CHANGE_OPTION = 'CHANGE_OPTION';

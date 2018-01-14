@@ -6,7 +6,10 @@ import Wrapper from './Wrapper';
 
 interface InputProps {
   name: string;
-  label: string;
+  options: [{
+    label: string;
+    value: string | null | number | boolean;
+  }];
   required?: boolean;
   type: string;
   onChange?: (evt: Event) => void;
@@ -14,19 +17,16 @@ interface InputProps {
 
 const Input:React.StatelessComponent<InputProps> = (props: any) => {
   const attrs = {
-    'aria-label': props.label,
+    'aria-label': props.options[0].label,
     type: props.type,
     name: props.name,
-    placeholder: props.label
+    placeholder: props.options[0].label
   };
 
-  props.required ? Object.defineProperty(attrs, 'required', { value: 'true' }) : () => null;
-  const input = props.onChange ? <input {...attrs} onChange={props.onChange}/> : <input {...attrs} />;
-  console.log(attrs);
   return (
     <Wrapper>
       <label>{props.label}</label>
-      {input}
+      <input {...attrs} onChange={props.onChange} required={props.required}/>
     </Wrapper>
   );
 }

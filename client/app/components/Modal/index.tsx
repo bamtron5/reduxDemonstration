@@ -4,6 +4,7 @@ import * as Redux from 'redux';
 import * as PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
 import { Children, ComponentState } from 'react';
+import { Row, Grid, Col } from 'react-styled-flexboxgrid';
 
 // components
 import Backdrop from './Backdrop';
@@ -61,10 +62,12 @@ export class Modal extends React.Component<IModal, IModalState> {
 
   render() {
     const modal = (
-      <Backdrop show={this.props.show}>
-        <Button onClick={this.props.onClose}>Close</Button>
-        <ModalContent>
-          <Container>
+      <Backdrop show={this.props.show} className="modal--Backdrop">
+        <ModalContent className="modal--Content">
+          <Container className="modal--Container">
+            <Row className="modal--Close">
+              <Button onClick={this.props.onClose}>Close</Button>
+            </Row>
             {Children.toArray(this.props.children)}
           </Container>
         </ModalContent>
