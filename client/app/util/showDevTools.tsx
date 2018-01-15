@@ -5,7 +5,6 @@ import DevTools from './../containers/DevTools';
 
 export default function showDevTools(store: Redux.Store<{}>) {
   const popup = window.open(null, 'Redux DevTools', 'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
-  // Reload in case it already exists
   popup.location.reload();
 
   setTimeout(() => {

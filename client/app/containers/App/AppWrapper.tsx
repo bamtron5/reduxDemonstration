@@ -12,6 +12,10 @@ const AppWrapper = styled.div`
   font-family: ${v.fonts.primary};
   color: ${v.color.base};
 
+  h1, h2 {
+    font-family: "Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
+  }
+
   *, *:after, *:before {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -21,19 +25,7 @@ const AppWrapper = styled.div`
   }
 
   //FORM RESET
-  textarea, select, input[type="date"],
-  input[type="datetime"],
-  input[type="datetime-local"],
-  input[type="email"],
-  input[type="month"],
-  input[type="number"],
-  input[type="password"],
-  input[type="search"],
-  input[type="tel"],
-  input[type="text"],
-  input[type="time"],
-  input[type="url"],
-  input[type="week"]{
+  textarea, select, input{
     -webkit-appearance: none;
     background-color: white;
     -webkit-rtl-ordering: logical;

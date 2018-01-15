@@ -4,14 +4,17 @@ import {ReducersMapObject} from 'redux';
 
 import {
   TOGGLE_MODAL,
+  NAME_CHANGE
 } from './constants';
 
 const initialState = fromJS({
-  showModal: false
+  showModal: false,
+  name: ''
 });
 
 export interface ModalActions extends Redux.Action {
   show: string;
+  name: string;
 }
 
 function modalReducer(state = initialState, action: ModalActions): ReducersMapObject {
@@ -19,6 +22,9 @@ function modalReducer(state = initialState, action: ModalActions): ReducersMapOb
     case TOGGLE_MODAL:
       return state
         .set('showModal', action.show);
+    case NAME_CHANGE:
+      return state
+        .set('name', action.name)
     default:
       return state;
   }

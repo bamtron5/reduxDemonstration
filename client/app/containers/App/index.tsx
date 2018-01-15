@@ -9,7 +9,30 @@ import ModalRoot from './ModalRoot';
 // CSS
 const normalize = require('normalize.css');
 
+export function checkSession() {
+  const hasSession = sessionStorage.getItem('session_id');
+  !hasSession ? createSession() : () => null;
+}
+
+export function createSession() {
+  const id = new Date().getTime().toString();
+  sessionStorage.setItem('session_id', id);
+}
+
+export function getSession(key: string): string {
+  return sessionStorage.getItem(key);
+}
+
+export function setSession(key: string, value: string) {
+  sessionStorage.setItem(key, value);
+}
+
+export function clearSession() {
+  sessionStorage.clear();
+}
+
 export function App() {
+  checkSession();
   return (
     <AppWrapper>
       <Helmet

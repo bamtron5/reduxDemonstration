@@ -11,8 +11,10 @@
   "dependencies": {
     "core-js": "^2.5.3",
     "express": "^4.16.2",
+    "file-loader": "^1.1.6",
     "history": "^4.7.2",
     "hoist-non-react-statics": "^2.3.1",
+    "image-webpack-loader": "^3.4.2",
     "immutable": "^3.8.2",
     "invariant": "^2.2.2",
     "lodash": "^4.17.4",
@@ -32,6 +34,7 @@
     "redux-immutable": "^4.0.0",
     "reselect": "^3.0.1",
     "styled-components": "^2.4.0",
+    "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

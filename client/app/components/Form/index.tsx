@@ -33,11 +33,9 @@ export interface IFormData {
 
 const Form:React.StatelessComponent<FormProps> = (props: any) => {
   return (
-    <Wrapper>
-      <form name={props.name} onSubmit={props.onFormSubmit}>
-        {Children.toArray(props.children)}
-      </form>
-    </Wrapper>
+    <form name={props.name} onSubmit={props.onFormSubmit}>
+      {Children.toArray(props.children)}
+    </form>
   );
 }
 

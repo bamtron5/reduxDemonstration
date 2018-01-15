@@ -118,7 +118,7 @@ const formData:IFormData = {
     type: 'select',
     required: true,
     flex: {
-      lg: 12,
+      lg: 6,
       xs: 6
     }
   },
@@ -129,7 +129,7 @@ const formData:IFormData = {
     type: 'text',
     required: true,
     flex: {
-      lg: 12,
+      lg: 6,
       xs: 6
     }
   }

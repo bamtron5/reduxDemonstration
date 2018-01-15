@@ -9,7 +9,10 @@ import { Row, Grid, Col } from 'react-styled-flexboxgrid';
 // components
 import Backdrop from './Backdrop';
 import ModalContent from './ModalContent';
-import Container from './../Container';
+import ModalContainer from './ModalContainer';
+import ModalHeader from './ModalHeader';
+import ModalFooter from './ModalFooter';
+import ModalClose from './ModalClose';
 import Button from './../Button';
 
 export interface IModalState extends React.ComponentState {
@@ -58,19 +61,28 @@ export class Modal extends React.Component<IModal, IModalState> {
     if (!this.props.show && this.modalRoot.contains(this.el)) {
       this.modalRoot.removeChild(this.el);
     }
+
+    // <Row className="modal--Close">
+    //   <Col xs={12}>
+    //     <Button onClick={this.props.onClose}>Close</Button>
+    //   </Col>
+    // </Row>
   }
 
   render() {
     const modal = (
       <Backdrop show={this.props.show} className="modal--Backdrop">
-        <ModalContent className="modal--Content">
-          <Container className="modal--Container">
-            <Row className="modal--Close">
-              <Button onClick={this.props.onClose}>Close</Button>
-            </Row>
+        <ModalContainer className="modal--Container">
+          <ModalHeader className="modal--Header">
+            <h2>Sign Up</h2>
+            <ModalClose className="modal--Close">x</ModalClose>
+          </ModalHeader>
+          <ModalContent className="modal--Content">
             {Children.toArray(this.props.children)}
-          </Container>
-        </ModalContent>
+          </ModalContent>
+          <ModalFooter>
+          </ModalFooter>
+        </ModalContainer>
       </Backdrop>
     );
 

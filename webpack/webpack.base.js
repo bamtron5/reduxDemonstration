@@ -20,7 +20,16 @@ module.exports = {
     rules: [
       { test: /\.tsx$/, use: 'awesome-typescript-loader' },
       { test: /\.html$/, use: 'html-loader' },
-      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ]}
+      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ]},
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader'
+          }
+        ]
+      }
     ]
   },
   plugins: [

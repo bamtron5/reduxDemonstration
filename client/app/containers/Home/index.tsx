@@ -12,9 +12,9 @@ import injectReducer from './../../util/injectReducer';
 import formData from './formData';
 
 // REDUX PARTS
-import { toggleModal } from './actions';
+import { toggleModal, nameChange } from './actions';
 import reducer from './reducer';
-import { makeSelectHomePage, IState } from './selectors';
+import { makeSelectHomePage, makeSelectName, IState } from './selectors';
 
 // COMPONENTS
 import Button from './../../components/Button';
@@ -24,18 +24,24 @@ import Form, { IFormData } from './../../components/Form';
 import Input from './../../components/Input';
 import DropDown from './../../components/DropDown';
 import { Debounce } from 'react-throttle';
+import Img from './../../components/Img';
+import {AB, Variation} from './../AB';
 
-// TODO submit the form close and reopen, the form is missing but is still submissable
-// For user event bound functions
+// ASSETS
+const screenOne = require('./assets/screen1.png');
+const screenTwo = require('./assets/screen2.png');
+
 let self = null;
 
 declare interface IHomeDispatch {
-  onToggleModal: (show: boolean) => Redux.Dispatch<() => void>
+  onToggleModal: (show: boolean) => Redux.Dispatch<() => void>;
+  onNameChange: (name: string) => Redux.Dispatch<() => void>;
 }
 
 declare interface IHomeProps extends IHomeDispatch {
   homePage: {
     showModal: boolean;
+    name: string;
   };
 }
 
@@ -44,18 +50,30 @@ export class HomePage extends React.Component<IHomeProps> {
   public formName: string = 'thisForm';
   public formJson: JSON | object = Object.create({});
   public formData: IFormData = formData;
+  public eventName: string | null = null;
 
   constructor(props: IHomeProps) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.watchField = this.watchField.bind(this);
-    this.formData.name['onChange'] = this.watchField;
+    this.formData.name['onChange'] = (e) => this.watchField(e);
     self = this;
   }
 
   public toggleModal = () => {
     this.props.onToggleModal(!this.props.homePage.showModal);
   };
+
+  componentDidUpdate() {
+    this.printName();
+  }
+
+  printName() {
+    if (this.props.homePage.name !== this.eventName) {
+      this.eventName = this.props.homePage.name
+      console.log(this.props.homePage.name);
+    }
+  }
 
   submitForm(evt: Event) {
     evt.preventDefault();
@@ -70,16 +88,22 @@ export class HomePage extends React.Component<IHomeProps> {
     console.log(this.formJson);
   }
 
-  watchField(evt: Event) {
-    evt.preventDefault();
-    console.log(`${evt.target['name']}: ${evt.target['value']}`);
+  watchField(evt: React.SyntheticEvent<IFormData>) {
+    evt.persist();
+    const eventV = evt.target['value'];
+    self.props.onNameChange(
+      (function() {
+        return eventV;
+      })()
+    );
   }
 
   wrapDebounce(key: string, elem: IFormData[string]) {
     return (
-      <Debounce key={key} time="700" handler="onChange">
-        <Input {...elem} />
-      </Debounce>
+      <Input {...elem} key={key}/>
+      // <Debounce key={key} time="700" handler="onChange">
+      //   <Input {...elem} />
+      // </Debounce>
     );
   }
 
@@ -126,12 +150,24 @@ export class HomePage extends React.Component<IHomeProps> {
 
           <Modal show={this.props.homePage.showModal} onClose={this.toggleModal}>
             <Form name={this.formName} onFormSubmit={this.submitForm}>
-              <Grid>
-                <Row>
-                  {this.printForm()}
-                </Row>
-              </Grid>
-              <Button type="submit">Submit</Button>
+              <Row>
+                <Col xs={6} sm={6}>
+                  <Row>
+                    {this.printForm()}
+                  </Row>
+                </Col>
+                <Col xs={6} sm={6}>
+                  <AB experiment="modalImage">
+                    <Variation selector="screenOne">
+                      <Img src={screenOne} />
+                    </Variation>
+                    <Variation selector="screenTwo">
+                      <Img src={screenTwo} />
+                    </Variation>
+                  </AB>
+                  <Button type="submit">Submit</Button>
+                </Col>
+              </Row>
             </Form>
           </Modal>
 
@@ -142,12 +178,14 @@ export class HomePage extends React.Component<IHomeProps> {
 }
 
 const mapStateToProps = (state: IState) => createStructuredSelector({
-  homePage: makeSelectHomePage(state)
+  homePage: makeSelectHomePage(state),
+  name: makeSelectName(state)
 });
 
 function mapDispatchToProps(dispatch: any) {
   const dispatchToProps: IHomeDispatch = {
-    onToggleModal: (show: boolean) => dispatch(toggleModal(show))
+    onToggleModal: (show: boolean) => dispatch(toggleModal(show)),
+    onNameChange: (name: string) => dispatch(nameChange(name))
   };
   return dispatchToProps;
 }

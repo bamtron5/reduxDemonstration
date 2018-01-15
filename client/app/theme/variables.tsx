@@ -39,9 +39,16 @@ const button = {
   }
 };
 
+const modal = {
+  width: '889px',
+  backdrop: 'rgba(0,0,0,.45)',
+  background: color.white
+}
+
 export default {
   button,
   color,
   fonts,
-  fontSize
+  fontSize,
+  modal
 };

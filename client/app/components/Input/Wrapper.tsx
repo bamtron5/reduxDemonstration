@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     color: rgba(0,0,0,.75);
     font-size: .875rem;
     margin: 0 0 1rem;
-    padding: .5rem;
+    padding: 8px;
     height: 2.3125rem;
     width: 100%;
     -moz-box-sizing: border-box;
@@ -27,6 +27,17 @@ const Wrapper = styled.div`
     -webkit-transition: -webkit-box-shadow .45s,border-color .45s ease-in-out;
     -moz-transition: -moz-box-shadow .45s,border-color .45s ease-in-out;
     transition: box-shadow .45s,border-color .45s ease-in-out;
+
+    ::placeholder {
+      color: #d3d3d3;
+    }
+
+    &:focus {
+      box-shadow: 0 0 5px #999;
+      background: #fafafa;
+      border-color: #999;
+      outline: 0;
+    }
   }
 `;
 

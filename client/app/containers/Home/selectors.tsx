@@ -13,6 +13,12 @@ const makeSelectHomePage = (state: IState) => createSelector(
   (substate: any) => substate.toJS()
 );
 
+const makeSelectName = (state: IState) => createSelector(
+  selectHomePage,
+  (substate: any) => substate.toJS()
+);
+
 export {
-  makeSelectHomePage
+  makeSelectHomePage,
+  makeSelectName
 };
