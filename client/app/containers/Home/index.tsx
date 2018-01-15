@@ -155,12 +155,12 @@ export class HomePage extends React.Component<IHomeProps> {
           <Modal show={this.props.homePage.showModal} onClose={this.toggleModal}>
             <Form name={this.formName} onFormSubmit={this.submitForm}>
               <Row>
-                <Col xs={6} sm={6}>
+                <Col xs={12} sm={6}>
                   <Row>
                     {this.printForm()}
                   </Row>
                 </Col>
-                <Col xs={6} sm={6}>
+                <Col xs={12} sm={6}>
                   <AB experiment="modalImage">
                     <Variation selector="screenOne">
                       <Img src={screenOne} />

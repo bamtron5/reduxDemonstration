@@ -120,7 +120,8 @@ const formData:IFormData = {
     required: true,
     flex: {
       lg: 6,
-      xs: 6
+      sm: 6,
+      xs: 12
     }
   },
   zipcode: {
@@ -131,7 +132,8 @@ const formData:IFormData = {
     required: true,
     flex: {
       lg: 6,
-      xs: 6
+      sm: 6,
+      xs: 12
     }
   }
 }
