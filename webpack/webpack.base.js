@@ -3,11 +3,15 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const root = path.join(__dirname, '../');
 
-module.exports = {
-  entry: [
+const entry = process.env.NODE_ENV === 'production'
+  ? [ path.join(root, 'client/app/index.tsx') ]
+  : [
     'webpack-hot-middleware/client?reload=true',
     path.join(root, 'client/app/index.tsx')
-  ],
+  ];
+
+module.exports = {
+  entry: entry,
   output: {
     path: path.join(root, 'dist'),
     filename: 'app.js'
@@ -33,15 +37,27 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    process.env.NODE_ENV === 'production' ? () => null : new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
     }),
     new HtmlWebpackPlugin({
-      inject: true,
-      template: path.join(root, 'client/app/index.html')
-    }),
+      template: path.join(root, 'client/app/index.html'),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      },
+      inject: true
+    })
   ]
 };

@@ -19,7 +19,7 @@ ReactDOM.render(
   </Provider>,
   mount
 );
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV !== 'production') {
   const showDevTools = require('./util/showDevTools').default;
   showDevTools(store);
