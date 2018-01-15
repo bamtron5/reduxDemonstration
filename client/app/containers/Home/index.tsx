@@ -78,14 +78,18 @@ export class HomePage extends React.Component<IHomeProps> {
   submitForm(evt: Event) {
     evt.preventDefault();
     const form = document.forms.namedItem(self.formName);
-    self.formToJson(new FormData(form));
-  }
+    const inputs = form.getElementsByTagName('input');
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].name.length) {
+        Object.defineProperty(this.formJson, inputs[i].name, {
+          value: inputs[i].value
+        });
+      }
+    }
 
-  formToJson(data: FormData) {
-    data['forEach']((value, key) => {
-      Object.defineProperty(this.formJson, key, { value });
-    });
     console.log(this.formJson);
+    this.formJson = Object.create({});
+    this.toggleModal();
   }
 
   watchField(evt: React.SyntheticEvent<IFormData>) {
@@ -170,7 +174,6 @@ export class HomePage extends React.Component<IHomeProps> {
               </Row>
             </Form>
           </Modal>
-
         </Container>
       </article>
     );

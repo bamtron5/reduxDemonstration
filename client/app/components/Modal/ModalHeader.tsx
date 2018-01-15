@@ -6,7 +6,7 @@ const ModalHeader = styled.div`
   display: flex;
   flex-direction: row;
   padding: .8rem 1.2rem;
-  border: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
   position: relative;
 `;
 

@@ -19,7 +19,8 @@ const formData:IFormData = {
     flex: {
       lg: 12,
       xs: 12
-    }
+    },
+    validation: true
   },
   phone: {
     name: 'phone',

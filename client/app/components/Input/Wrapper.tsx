@@ -5,6 +5,18 @@ import m from './../../theme/mixins';
 const Wrapper = styled.div`
   display: flex;
   flex: 1;
+  position: relative;
+  margin: 0 0 1rem 0;
+
+  .validationMsg {
+    position: absolute;
+    font-size: 11px;
+    top: -14px;
+    text-align:left;
+    left:0px;
+    display:block;
+    width: 100%;
+  }
 
   > input {
     display: flex;
@@ -17,7 +29,7 @@ const Wrapper = styled.div`
     box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
     color: rgba(0,0,0,.75);
     font-size: .875rem;
-    margin: 0 0 1rem;
+    margin: 0 0 .3rem 0;
     padding: 8px;
     height: 2.3125rem;
     width: 100%;

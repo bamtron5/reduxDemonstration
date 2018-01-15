@@ -16,6 +16,12 @@ const ModalContainer = styled.div`
   ${m.boxShadow('0 0 10px rgba(0,0,0,.4)')};
   flex-direction: column;
   z-index: 1000;
+
+  @media (max-width: ${v.modal.width}) {
+    margin: 0 1.2rem;
+    top: 7%;
+  }
+
 `;
 
 export default ModalContainer;

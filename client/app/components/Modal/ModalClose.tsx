@@ -13,6 +13,7 @@ const ModalContainer = styled.div`
   font-weight: 700;
   cursor: pointer;
   font-weight: ${v.fontSize.weight.heavy};
+  cursor: pointer;
 `;
 
 export default ModalContainer;

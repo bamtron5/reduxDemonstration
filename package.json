@@ -9,6 +9,7 @@
   "author": "Brandon Morrison",
   "license": "ISC",
   "dependencies": {
+    "@types/validator": "^6.3.0",
     "core-js": "^2.5.3",
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
@@ -35,6 +36,7 @@
     "reselect": "^3.0.1",
     "styled-components": "^2.4.0",
     "url-loader": "^0.6.2",
+    "validator": "^9.2.0",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

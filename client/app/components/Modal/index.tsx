@@ -54,19 +54,16 @@ export class Modal extends React.Component<IModal, IModalState> {
   }
 
   toggleModal() {
+    const body = document.getElementsByTagName('body')[0];
     if (this.props.show && !this.modalRoot.contains(this.el)) {
+      body.style.overflow = 'hidden';
       this.modalRoot.appendChild(this.el);
     }
 
     if (!this.props.show && this.modalRoot.contains(this.el)) {
+      body.style.overflow = 'visible';
       this.modalRoot.removeChild(this.el);
     }
-
-    // <Row className="modal--Close">
-    //   <Col xs={12}>
-    //     <Button onClick={this.props.onClose}>Close</Button>
-    //   </Col>
-    // </Row>
   }
 
   render() {
@@ -75,7 +72,7 @@ export class Modal extends React.Component<IModal, IModalState> {
         <ModalContainer className="modal--Container">
           <ModalHeader className="modal--Header">
             <h2>Sign Up</h2>
-            <ModalClose className="modal--Close">x</ModalClose>
+            <ModalClose className="modal--Close" onClick={this.props.onClose}>x</ModalClose>
           </ModalHeader>
           <ModalContent className="modal--Content">
             {Children.toArray(this.props.children)}

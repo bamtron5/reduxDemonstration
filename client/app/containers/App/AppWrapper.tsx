@@ -24,6 +24,10 @@ const AppWrapper = styled.div`
     font-family: ${v.fonts.primary};
   }
 
+  .warn {
+    color: red;
+  }
+
   //FORM RESET
   textarea, select, input{
     -webkit-appearance: none;
