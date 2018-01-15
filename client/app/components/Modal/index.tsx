@@ -14,6 +14,7 @@ import ModalHeader from './ModalHeader';
 import ModalFooter from './ModalFooter';
 import ModalClose from './ModalClose';
 import Button from './../Button';
+import ModalScroll from './ModalScroll';
 
 export interface IModalState extends React.ComponentState {
   isOpen: boolean;
@@ -69,17 +70,19 @@ export class Modal extends React.Component<IModal, IModalState> {
   render() {
     const modal = (
       <Backdrop show={this.props.show} className="modal--Backdrop">
-        <ModalContainer className="modal--Container">
-          <ModalHeader className="modal--Header">
-            <h2>Sign Up</h2>
-            <ModalClose className="modal--Close" onClick={this.props.onClose}>x</ModalClose>
-          </ModalHeader>
-          <ModalContent className="modal--Content">
-            {Children.toArray(this.props.children)}
-          </ModalContent>
-          <ModalFooter>
-          </ModalFooter>
-        </ModalContainer>
+        <ModalScroll>
+          <ModalContainer className="modal--Container">
+            <ModalHeader className="modal--Header">
+              <h2>Sign Up</h2>
+              <ModalClose className="modal--Close" onClick={this.props.onClose}>x</ModalClose>
+            </ModalHeader>
+            <ModalContent className="modal--Content">
+              {Children.toArray(this.props.children)}
+            </ModalContent>
+            <ModalFooter>
+            </ModalFooter>
+          </ModalContainer>
+        </ModalScroll>
       </Backdrop>
     );
 

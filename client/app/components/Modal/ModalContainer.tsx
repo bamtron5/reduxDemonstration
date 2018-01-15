@@ -18,7 +18,7 @@ const ModalContainer = styled.div`
   z-index: 1000;
 
   @media (max-width: ${v.modal.width}) {
-    margin: 0 1.2rem;
+    margin: 0 1.2rem 30px 1.2rem;
     top: 7%;
   }
 

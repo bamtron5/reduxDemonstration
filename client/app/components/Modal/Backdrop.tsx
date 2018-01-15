@@ -16,6 +16,7 @@ export namespace App.Components {
     top: 0px;
     display: ${(p: IBackdrop) => p.show ? 'flex' : 'none'};
     z-index: 999;
+    overflow: auto;
   `;
 }
 

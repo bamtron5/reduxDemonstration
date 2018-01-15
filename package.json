@@ -6,8 +6,8 @@
   "scripts": {
     "start": "nodemon server",
     "build": "node_modules/.bin/webpack --config webpack/webpack.base.js",
-    "build:prod": "npm run build && npm run prep && node server",
-    "prep": "cp dist/index.html ./"
+    "build:prod": "npm run prep && node server",
+    "prep": "cp dist/* ./"
   },
   "author": "Brandon Morrison",
   "license": "ISC",
