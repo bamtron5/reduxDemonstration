@@ -2,10 +2,11 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { Children } from 'react';
 import * as PropTypes from 'prop-types';
-import { isEmail } from 'validator';
+import { isEmail, isMobilePhone } from 'validator';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { debounce } from 'lodash';
 
 import { IFlex } from './../../theme/flexbox.interface';
 import { IOption } from './../DropDown/interface';
@@ -33,7 +34,7 @@ export interface InputProps extends InputDispatch {
   }];
   type: string;
   required?: boolean;
-  onChange?: (evt: any) => void;
+  onChange?: any; // string or method.  STRING OF METHOD to be specific e.g. 'watchField' for this.watchField
   placeholder?: string;
   onSelect?: (selectedOption: IOption) => Redux.Dispatch<() => void>;
   validation?: boolean;
@@ -48,6 +49,7 @@ interface IValidator {
 export class Input extends React.Component<InputProps> {
   onChange = null; // THIS IS THE COMBINED LISTENERS FROM PROPS AND VALIDATION
   initialValidation = true;
+  delayedCallback: any;
 
   constructor(props) {
     super(props);
@@ -56,23 +58,35 @@ export class Input extends React.Component<InputProps> {
   }
 
   setup() {
-    if (this.props.validation) {
+    if (this.props.validation || this.props.onChange) {
       this.onChange = this.inputHandler;
-    } else if (this.props.onChange) {
-      this.onChange = this.props.onChange;
     }
   }
 
-  inputHandler(e: React.SyntheticEvent<InputProps>){
-    const evt = e;
-    if (this.props.onChange) {
-      this.props.onChange(evt);
-    }
+  componentDidMount() {
+    this.delayedCallback = debounce(function (e) {
+      if (this.props.onChange) {
+        this.props.onChange(e);
+      }
 
+      if (this.props.validation) {
+        this.checkValidators(e);
+      }
+    }, 700);
+  }
+
+  inputHandler(e: React.SyntheticEvent<InputProps>) {
+    e.persist();
+    this.delayedCallback(e);
+  }
+
+  checkValidators(e: React.SyntheticEvent<InputProps>) {
     switch (this.props.type) {
       case 'email':
-        this.emailValidator(evt);
+        this.emailValidator(e);
         break;
+      case 'tel':
+        this.phoneValidator(e);
       default:
         break;
     }
@@ -84,6 +98,15 @@ export class Input extends React.Component<InputProps> {
       value: e.target['value'],
       valid: isEmail(e.target['value']),
       message: `${e.target['value'] ? e.target['value'] : 'this'} is not a valid email`
+    });
+  }
+
+  phoneValidator(e: React.SyntheticEvent<InputProps>) {
+    this.props.onKeyChange({
+      name: e.target['name'],
+      value: e.target['value'],
+      valid: isMobilePhone(e.target['value'], 'en-US'),
+      message: `${e.target['value'] ? e.target['value'] : 'this'} is not a valid phone`
     });
   }
 

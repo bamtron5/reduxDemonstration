@@ -6,6 +6,7 @@ const formData:IFormData = {
     options: [ { label: 'Name', value: null } ],
     type: 'text',
     required: true,
+    onChange: 'watchField',
     flex: {
       lg: 12,
       xs: 12
@@ -30,7 +31,8 @@ const formData:IFormData = {
     flex: {
       lg: 12,
       xs: 12
-    }
+    },
+    validation: true
   },
   address: {
     name: 'address',

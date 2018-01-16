@@ -56,8 +56,18 @@ export class HomePage extends React.Component<IHomeProps> {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.watchField = this.watchField.bind(this);
-    this.formData.name['onChange'] = (e) => this.watchField(e);
+    this.mapOnChangeMethods();
     self = this;
+  }
+
+  mapOnChangeMethods() {
+    const keys = Object.keys(formData);
+    keys.forEach((key: string) => {
+      const selectedMethod = formData[key].onChange;
+      if (selectedMethod && this[selectedMethod]) {
+        formData[key].onChange = this[selectedMethod];
+      }
+    });
   }
 
   public toggleModal = () => {
@@ -92,23 +102,9 @@ export class HomePage extends React.Component<IHomeProps> {
     this.toggleModal();
   }
 
-  watchField(evt: React.SyntheticEvent<IFormData>) {
-    evt.persist();
-    const eventV = evt.target['value'];
-    self.props.onNameChange(
-      (function() {
-        return eventV;
-      })()
-    );
-  }
-
-  wrapDebounce(key: string, elem: IFormData[string]) {
-    return (
-      <Input {...elem} key={key}/>
-      // <Debounce key={key} time="700" handler="onChange">
-      //   <Input {...elem} />
-      // </Debounce>
-    );
+  watchField(e: React.SyntheticEvent<IFormData>) {
+    // INPUTS ARE ALREADY DEBOUNCED AND PERSISTED
+    self.props.onNameChange(e.target['value']);
   }
 
   printFormElement(key: string, elem: IFormData[string]) {
@@ -134,9 +130,7 @@ export class HomePage extends React.Component<IHomeProps> {
               {child}
             </Col>
           );
-          const input = hasOnChange
-            ? this.wrapDebounce(key, this.formData[v])
-            : this.printFormElement(key, this.formData[v])
+          const input = this.printFormElement(key, this.formData[v]);
           return elem(input);
       });
   }
