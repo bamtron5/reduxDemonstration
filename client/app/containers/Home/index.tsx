@@ -20,7 +20,7 @@ import { makeSelectHomePage, makeSelectName, IState } from './selectors';
 import Button from './../../components/Button';
 import Modal from './../../components/Modal';
 import Container from './../../components/Container';
-import Form, { IFormData } from './../../components/Form';
+import Form, { IFormData, IFormSettings } from './../../components/Form';
 import Input from './../../components/Input';
 import DropDown from './../../components/DropDown';
 import { Debounce } from 'react-throttle';
@@ -47,27 +47,16 @@ declare interface IHomeProps extends IHomeDispatch {
 
 export class HomePage extends React.Component<IHomeProps> {
   public show: boolean = false;
-  public formName: string = 'thisForm';
+  public formName: string = formData.name;
   public formJson: JSON | object = Object.create({});
-  public formData: IFormData = formData;
+  public formData = formData;
   public eventName: string | null = null;
 
   constructor(props: IHomeProps) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.watchField = this.watchField.bind(this);
-    this.mapOnChangeMethods();
     self = this;
-  }
-
-  mapOnChangeMethods() {
-    const keys = Object.keys(formData);
-    keys.forEach((key: string) => {
-      const selectedMethod = formData[key].onChange;
-      if (selectedMethod && this[selectedMethod]) {
-        formData[key].onChange = this[selectedMethod];
-      }
-    });
   }
 
   public toggleModal = () => {
@@ -83,6 +72,11 @@ export class HomePage extends React.Component<IHomeProps> {
       this.eventName = this.props.homePage.name
       console.log(this.props.homePage.name);
     }
+  }
+
+  watchField(e: React.SyntheticEvent<IFormData>) {
+    // INPUTS ARE ALREADY DEBOUNCED AND PERSISTED
+    self.props.onNameChange(e.target['value']);
   }
 
   submitForm(evt: Event) {
@@ -102,39 +96,6 @@ export class HomePage extends React.Component<IHomeProps> {
     this.toggleModal();
   }
 
-  watchField(e: React.SyntheticEvent<IFormData>) {
-    // INPUTS ARE ALREADY DEBOUNCED AND PERSISTED
-    self.props.onNameChange(e.target['value']);
-  }
-
-  printFormElement(key: string, elem: IFormData[string]) {
-    const caseOne = (type: string) => ['text', 'tel', 'email'].some(v => v === type) ? type : false;
-    const caseTwo = (type: string) => type === 'select' ? type : false;
-    switch (elem.type) {
-      case caseOne(elem.type):
-        return (<Input key={key} {...elem} />);
-      case caseTwo(elem.type):
-        return (<DropDown key={key} {...elem} />);
-      default:
-        return;
-    }
-  }
-
-  printForm() {
-    return Object.keys(this.formData)
-      .map((v) => {
-          const key = `${this.formName}-${this.formData[v].name}`;
-          const hasOnChange = Object.keys(this.formData[v]).some(k => k === 'onChange');
-          const elem = (child: JSX.Element) => (
-            <Col key={key} {...this.formData[v].flex} >
-              {child}
-            </Col>
-          );
-          const input = this.printFormElement(key, this.formData[v]);
-          return elem(input);
-      });
-  }
-
   render() {
     return (
       <article>
@@ -147,26 +108,24 @@ export class HomePage extends React.Component<IHomeProps> {
           <Button onClick={this.toggleModal}>Sign Up</Button>
 
           <Modal show={this.props.homePage.showModal} onClose={this.toggleModal}>
-            <Form name={this.formName} onFormSubmit={this.submitForm}>
-              <Row>
-                <Col xs={12} sm={6}>
-                  <Row>
-                    {this.printForm()}
-                  </Row>
-                </Col>
-                <Col xs={12} sm={6}>
-                  <AB experiment="modalImage">
-                    <Variation selector="screenOne">
-                      <Img src={screenOne} />
-                    </Variation>
-                    <Variation selector="screenTwo">
-                      <Img src={screenTwo} />
-                    </Variation>
-                  </AB>
-                  <Button type="submit">Submit</Button>
-                </Col>
-              </Row>
-            </Form>
+            <Row>
+              <Col xs={12} sm={6}>
+                <Form settings={this.formData} instance={this}/>
+              </Col>
+              <Col xs={12} sm={6}>
+                <AB experiment="modalImage">
+                  <Variation selector="screenOne">
+                    <Img src={screenOne} />
+                  </Variation>
+                  <Variation selector="screenTwo">
+                    <Img src={screenTwo} />
+                  </Variation>
+                </AB>
+                <Button>
+                  <label htmlFor={this.formData.name + '_submit'}>Submit</label>
+                </Button>
+              </Col>
+            </Row>
           </Modal>
         </Container>
       </article>

@@ -16,6 +16,10 @@ const AppWrapper = styled.div`
     font-family: "Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
   }
 
+  .hidden {
+    display: none;
+  }
+
   *, *:after, *:before {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
