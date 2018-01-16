@@ -33,6 +33,7 @@ declare var Promise;
 let self = null
 export class Form extends React.Component<FormProps, {}> {
   parent: React.Component<{}>;
+  submitMethod: null;
   constructor(props) {
     super(props);
     self = this;
@@ -40,6 +41,7 @@ export class Form extends React.Component<FormProps, {}> {
   }
 
   mapOnChangeMethods() {
+    this.submitMethod = this.props.instance[this.props.settings.onSubmit];
     const keys = Object.keys(this.props.settings.data);
     keys.forEach((key: string) => {
       const selectedMethod = this.props.settings.data[key].onChange;
@@ -79,7 +81,7 @@ export class Form extends React.Component<FormProps, {}> {
 
   render() {
     return (
-      <form name={this.props.settings.name}>
+      <form name={this.props.settings.name} onSubmit={this.submitMethod}>
         <Row>
           {this.printForm()}
         </Row>
