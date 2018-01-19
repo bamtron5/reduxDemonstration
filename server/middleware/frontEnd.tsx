@@ -16,7 +16,7 @@ export default function hmr(app: express.Application) {
       publicPath: '/',
     });
   } else {
-    const compiler = webpack(webpackConfig);
+    const compiler:any = webpack(webpackConfig);
     const middleware = webpackDevMiddleWare(compiler, {
       publicPath: webpackConfig.output.publicPath
     });
@@ -26,8 +26,9 @@ export default function hmr(app: express.Application) {
     const fs = middleware.fileSystem;
 
     app.get('*', (req, res) => {
-      fs.readFile(path.join(__dirname, '../../client/app/index.html'), {}, (err, file) => {
-        if (err) return res.sendStatus(404);
+      const filePath = path.resolve(process.cwd(), 'dist/index.html').toString();
+      fs.readFile(filePath, 'utf8', (err, file) => {
+        if (err) return res.send('bad route').status(404);
         res.send(file.toString());
       });
     });

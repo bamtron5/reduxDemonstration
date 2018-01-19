@@ -7,7 +7,9 @@
     "start": "nodemon server",
     "build": "node_modules/.bin/webpack --config webpack/webpack.base.js",
     "build:prod": "npm run prep && node server",
-    "prep": "cp dist/* ./"
+    "prep": "cp dist/* ./",
+    "test": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "author": "Brandon Morrison",
   "license": "ISC",
@@ -22,6 +24,7 @@
     "image-webpack-loader": "^3.4.2",
     "immutable": "^3.8.2",
     "invariant": "^2.2.2",
+    "jest-cli": "^22.1.4",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
     "path": "^0.12.7",
@@ -30,6 +33,7 @@
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "react-select": "^1.2.1",
@@ -45,15 +49,19 @@
     "webpack": "^3.10.0"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.6",
+    "@types/enzyme-adapter-react-16": "^1.0.1",
     "@types/express": "^4.11.0",
     "@types/history": "^4.6.2",
     "@types/invariant": "^2.2.29",
+    "@types/jest": "^22.0.1",
     "@types/lodash": "^4.14.92",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
     "@types/react-helmet": "^5.0.3",
     "@types/react-redux": "^5.0.14",
+    "@types/react-router": "^4.0.20",
     "@types/react-router-dom": "^4.2.3",
     "@types/react-router-redux": "^5.0.11",
     "@types/react-select": "^1.1.0",
@@ -67,17 +75,41 @@
     "@types/webpack-hot-middleware": "^2.16.2",
     "awesome-typescript-loader": "^3.4.1",
     "css-loader": "^0.28.8",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "html-loader": "^0.5.4",
     "html-webpack-plugin": "^2.30.1",
+    "jest-css-modules": "^1.1.0",
     "jsx": "^0.9.89",
+    "mock-local-storage": "^1.0.5",
     "nodemon": "^1.14.11",
     "react-throttle": "^0.3.0",
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.4.0",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.19.1",
+    "ts-jest": "^22.0.1",
     "typescript": "^2.6.2",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "setupTestFrameworkScriptFile": "mock-local-storage",
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
+      "\\.(gif|jpg|png)$": "<rootDir>/client/app/empty-module.tsx"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

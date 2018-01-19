@@ -8,7 +8,6 @@ import ModalRoot from './ModalRoot';
 
 // CSS
 const normalize = require('normalize.css');
-
 export function checkSession() {
   const hasSession = sessionStorage.getItem('session_id');
   !hasSession ? createSession() : () => null;
@@ -42,7 +41,7 @@ export function App() {
         <meta name="description" content="Project for SA" />
       </Helmet>
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route path="/" component={HomePage} />
       </Switch>
       <ModalRoot id="modalRoot"/>
     </AppWrapper>

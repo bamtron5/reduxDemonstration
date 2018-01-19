@@ -2,3 +2,5 @@ node_modules
 dist
 server/**/*.js
 server/**/*.map
+*.txt
+coverage

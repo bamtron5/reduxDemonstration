@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import storeConfig from './storeConfig';
+import * as emptyModule from './empty-module';
 
 import App from './containers/App';
 

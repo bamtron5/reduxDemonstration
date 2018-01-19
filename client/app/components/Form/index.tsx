@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { Children } from 'react';
 import * as PropTypes from 'prop-types';
-import { v1 } from 'uuid';
 import { Col, Row } from 'react-styled-flexboxgrid';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -58,6 +57,7 @@ export class Form extends React.Component<FormProps, {}> {
   delayedCallback: any;
   inputs = Object.create({});
   props: FormProps;
+  valid: boolean = false;
 
   constructor(props: FormProps) {
     super(props);
@@ -71,7 +71,7 @@ export class Form extends React.Component<FormProps, {}> {
     Object.keys(this.props.settings.data)
       .forEach((v) => {
         this.inputs[v] = {
-          isValid: false
+          valid: false
         }
       });
 
@@ -97,7 +97,6 @@ export class Form extends React.Component<FormProps, {}> {
   }
 
   mapOnChangeMethods() {
-    this.submitMethod = this.props.instance[this.props.settings.onSubmit];
     const keys = Object.keys(this.props.settings.data);
     keys.forEach((key: string) => {
       const selectedMethod = this.props.settings.data[key].onChange;
@@ -175,20 +174,20 @@ export class Form extends React.Component<FormProps, {}> {
   printForm() {
     return Object.keys(this.props.settings.data)
       .map((v) => {
-          const cur = this.props.settings.data[v];
-          const key = `${this.props.settings.name}-${cur.name}`;
-          const hasOnChange = Object.keys(cur).some(k => k === 'onChange');
+        const cur = this.props.settings.data[v];
+        const key = `${this.props.settings.name}-${cur.name}`;
+        const hasOnChange = Object.keys(cur).some(k => k === 'onChange');
 
-          if (hasOnChange || cur.validation) {
-            cur.inputHandler = this.inputHandler;
-          }
-          const elem = (child: JSX.Element) => (
-            <Col key={key} {...cur.flex} >
-              {child}
-            </Col>
-          );
-          const input = this.printFormElement(key, cur);
-          return elem(input);
+        if (hasOnChange || cur.validation) {
+          cur.inputHandler = this.inputHandler;
+        }
+        const elem = (child: JSX.Element) => (
+          <Col key={key} {...cur.flex} >
+            {child}
+          </Col>
+        );
+        const input = this.printFormElement(key, cur);
+        return elem(input);
       });
   }
 

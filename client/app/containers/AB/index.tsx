@@ -39,11 +39,7 @@ export class AB extends React.Component<IABProps> {
 
   runTest() {
     const variation = getSession(this.props.experiment);
-    this.variations = Children.toArray(this.props.children)
-      .map((v) => {
-        v['type'].prototype.constructor.displayName === 'Variation';
-        return v;
-      });
+    this.variations = Children.toArray(this.props.children);
 
     if (!variation) {
       const random:number = this.getRandomNumber(this.variations.length - 1);
