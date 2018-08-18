@@ -1,4 +1,4 @@
 export const config = {
-  port: process.env.port || 8000,
+  port: Number(process.env.port) || 8000,
   host: process.env.host || 'localhost'
 };

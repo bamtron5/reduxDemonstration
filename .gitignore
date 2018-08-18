@@ -1,5 +1,7 @@
 node_modules
 dist
+client/**/*.js
+client/**/*.map
 server/**/*.js
 server/**/*.map
 *.txt
