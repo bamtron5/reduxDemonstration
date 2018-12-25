@@ -1,5 +1,4 @@
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 import * as React from 'react';
 import * as Redux from 'redux';
 import { Children } from 'react';
@@ -10,9 +9,6 @@ import { createStructuredSelector } from 'reselect';
 
 // INTERFACE
 import { IOption, DropDownProps, ISelectDispatch } from './interface';
-
-// UTIL
-import injectReducer from './../../util/injectReducer';
 
 // REDUX PARTS
 import { changeSelect } from './actions';
@@ -37,7 +33,7 @@ export class DropDown extends React.Component<DropDownProps> {
     return (
       <Wrapper>
         <Select
-          value={this.props.selectedOption}
+          value={{value: this.props.selectedOption, label: this.props.selectedOption}}
           placeholder={this.props.selectedOption || this.props.placeholder || `Choose an option...`}
           options={this.props.options}
           onChange={this.changeHandler}
@@ -59,10 +55,9 @@ function mapDispatchToProps(dispatch: any) {
   return dispatchToProps;
 }
 
-const withReducer = injectReducer({ key: 'dropDown', reducer });
+// const withReducer = injectReducer({ key: 'dropDown', reducer });
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const composed = compose<React.ComponentClass<DropDownProps>>(
-  withReducer,
   withConnect
 );
 

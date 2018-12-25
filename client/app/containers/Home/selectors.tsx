@@ -1,7 +1,7 @@
+import { Iterable } from 'immutable-js';
 import { createSelector } from 'reselect';
-import * as immutable from 'immutable';
 
-export interface IState extends immutable.Iterable<string, {}> {
+export interface IState extends Iterable<string, {}> {
   get: (k: string) => React.ComponentState
 }
 

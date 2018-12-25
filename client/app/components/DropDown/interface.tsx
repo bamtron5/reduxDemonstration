@@ -17,7 +17,7 @@ export interface DropDownProps extends ISelectDispatch {
 }
 
 export interface ISelectDispatch {
-  onSelect?: (selectedOption: IOption) => Redux.Dispatch<() => void>
+  onSelect?: (selectedOption: IOption) => Redux.Dispatch<Redux.Action<any>>
 }
 
 export interface ISelectAction {

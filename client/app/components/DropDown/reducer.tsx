@@ -11,7 +11,7 @@ const initialState = fromJS({
   selectedOption: ''
 });
 
-function modalReducer(state = initialState, action: ISelectAction): ReducersMapObject {
+function dropDownReducer(state = initialState, action: ISelectAction): ReducersMapObject {
   switch (action.type) {
     case CHANGE_OPTION:
       return state
@@ -21,4 +21,4 @@ function modalReducer(state = initialState, action: ISelectAction): ReducersMapO
   }
 }
 
-export default modalReducer;
+export default dropDownReducer;

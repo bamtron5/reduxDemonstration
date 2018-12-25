@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { Router } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 import storeConfig from './storeConfig';
 import * as emptyModule from './empty-module';
@@ -14,9 +14,9 @@ const store = storeConfig({}, history);
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router history={history}>
       <App />
-    </ConnectedRouter>
+    </Router>
   </Provider>,
   mount
 );

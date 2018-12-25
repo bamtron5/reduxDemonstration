@@ -7,10 +7,8 @@ import { createStructuredSelector } from 'reselect';
 
 import { IFlex } from './../../theme/flexbox.interface';
 import { IOption } from './../DropDown/interface';
-
-import { InputAction } from './../Form/actions';
-
 import Wrapper from './Wrapper';
+import { InputAction } from '../Form/actions';
 
 export interface InputProps {
   flex?: IFlex;
@@ -18,13 +16,13 @@ export interface InputProps {
   formName?: string;
   options: [{
     label: string;
-    value: string | null | number | boolean;
+    value: string | number | boolean;
   }];
   type: string;
   required?: boolean;
   onChange?: any; // string or method.  STRING OF METHOD to be specific e.g. 'watchField' for this.watchField
   placeholder?: string;
-  onSelect?: (selectedOption: IOption) => Redux.Dispatch<() => void>;
+  onSelect?: (selectedOption: IOption) => Redux.Dispatch<Redux.Action<any>>;
   validation?: boolean;
   printedValidation?: JSX.Element | null;
   inputHandler?: any;

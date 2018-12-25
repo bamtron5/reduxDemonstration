@@ -11,6 +11,7 @@ const entry = process.env.NODE_ENV === 'production'
   ];
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: entry,
   output: {
     path: path.join(root, 'dist'),

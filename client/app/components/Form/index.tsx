@@ -14,8 +14,6 @@ import { IFlex } from './../../theme/flexbox.interface';
 import { InputProps } from './../Input/index';
 import { ISelectDispatch, IOption } from './../DropDown/interface';
 
-import injectReducer from './../../util/injectReducer';
-
 import Input from './../Input';
 import DropDown from './../DropDown';
 import Wrapper from './Wrapper';
@@ -26,9 +24,9 @@ import { makeSelectForms, IState } from './selectors';
 import reducer from './reducer';
 
 interface FormDispatch {
-  onSetup?: (value: Map<{}, FormAction>) => Redux.Dispatch<() => void>;
-  forms?: IDispatchedForms; // FormAction [key:string]
-  onKeyChange?: (value: InputAction) => Redux.Dispatch<() => void>;
+  onSetup?: (value: Map<{}, FormAction>) => Redux.Dispatch<Redux.Action<any>>;
+  form?: IDispatchedForms; // FormAction [key:string]
+  onKeyChange?: (value: InputAction) => Redux.Dispatch<Redux.Action<any>>;
 }
 
 export interface IFormData {
@@ -39,11 +37,17 @@ export interface IFormSettings {
   name: string;
   onSubmit: string;
   data: IFormData;
+  forms?: {
+    [index:string]: any;
+  };
 }
 
 export interface FormProps extends FormDispatch {
   settings: IFormSettings;
   instance: React.Component<{}>;
+  forms?: {
+    [index:string]: any;
+  };
 }
 
 declare var Promise;
@@ -215,10 +219,9 @@ function mapDispatchToProps(dispatch: any) {
   return dispatchToProps;
 }
 
-const withReducer = injectReducer({ key: 'forms', reducer });
+// const withReducer = injectReducer({ key: 'forms', reducer });
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const composed = compose<React.ComponentClass<FormProps>>(
-  withReducer,
   withConnect
 );
 

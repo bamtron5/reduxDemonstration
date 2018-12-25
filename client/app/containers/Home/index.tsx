@@ -8,7 +8,6 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 import { Children } from 'react';
 
 // UTIL
-import injectReducer from './../../util/injectReducer';
 import formData from './formData';
 
 // REDUX PARTS
@@ -26,6 +25,7 @@ import DropDown from './../../components/DropDown';
 import { Debounce } from 'react-throttle';
 import Img from './../../components/Img';
 import {AB, Variation} from './../AB';
+import { ModalActions } from './reducer';
 
 // ASSETS
 const screenOne = require('./assets/screen1.png');
@@ -34,8 +34,8 @@ const screenTwo = require('./assets/screen2.png');
 let self = null;
 
 declare interface IHomeDispatch {
-  onToggleModal: (show: boolean) => Redux.Dispatch<() => void>;
-  onNameChange: (name: string) => Redux.Dispatch<() => void>;
+  onToggleModal: (show: boolean) => Redux.Dispatch<Redux.Action<any>>;
+  onNameChange: (name: string) => Redux.Dispatch<Redux.Action<any>>;
 }
 
 declare interface IHomeProps extends IHomeDispatch {
@@ -146,10 +146,8 @@ function mapDispatchToProps(dispatch: any) {
   return dispatchToProps;
 }
 
-const withReducer = injectReducer({ key: 'homePage', reducer });
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const composed = compose<React.ComponentClass<IHomeProps>>(
-  withReducer,
   withConnect
 );
 
