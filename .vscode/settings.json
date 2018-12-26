@@ -1,0 +1,11 @@
+// Configure glob patterns for excluding files and folders. For example, the files explorer decides which files and folders to show or hide based on this setting. Read more about glob patterns [here](https://code.visualstudio.com/docs/editor/codebasics#_advanced-search-options).
+{
+  "files.exclude": {
+    "client/**/*.js": true,
+    "client/**/*.map": true,
+    "server/**/*.js": true,
+    "server/**/*.map": true,
+    "node_modules": true,
+    "dist": true
+  }
+}

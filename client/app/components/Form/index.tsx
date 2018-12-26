@@ -197,7 +197,7 @@ export class Form extends React.Component<FormProps, {}> {
 
   render() {
     return (
-      <form name={this.props.settings.name} onSubmit={this.submitMethod}>
+      <form name={this.props.settings.name} onSubmit={this.props.instance[this.props.settings.onSubmit]}>
         <Row>
           {this.printForm()}
         </Row>
